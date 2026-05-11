@@ -24,8 +24,9 @@ import com.example.aistudyassistant.ui.theme.AIStudyAssistantTheme
 @Composable
 fun KnowledgeBaseScreen(
     modifier: Modifier = Modifier,
-    onBackClick: () -> Unit = {}
-) {
+    onBackClick: () -> Unit = {},
+    onKnowledgeBaseClick: () -> Unit = {}
+){
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -62,17 +63,20 @@ fun KnowledgeBaseScreen(
         ) {
             KnowledgeBaseCard(
                 title = "408 计算机基础",
-                description = "包含操作系统、计算机网络、数据结构和组成原理复习资料。"
+                description = "包含操作系统、计算机网络、数据结构和组成原理复习资料。",
+                onClick = onKnowledgeBaseClick
             )
 
             KnowledgeBaseCard(
                 title = "机器学习",
-                description = "课程笔记、论文阅读记录和实验总结。"
+                description = "课程笔记、论文阅读记录和实验总结。",
+                onClick = onKnowledgeBaseClick
             )
 
             KnowledgeBaseCard(
                 title = "面试准备",
-                description = "算法题、八股文、项目复盘和面试记录。"
+                description = "算法题、八股文、项目复盘和面试记录。",
+                onClick = onKnowledgeBaseClick
             )
         }
 
@@ -91,9 +95,11 @@ fun KnowledgeBaseScreen(
 private fun KnowledgeBaseCard(
     title: String,
     description: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
+        onClick = onClick,
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 3.dp)
