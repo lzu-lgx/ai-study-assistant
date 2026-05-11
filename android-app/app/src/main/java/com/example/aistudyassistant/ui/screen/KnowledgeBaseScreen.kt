@@ -12,6 +12,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -21,7 +22,10 @@ import androidx.compose.ui.unit.dp
 import com.example.aistudyassistant.ui.theme.AIStudyAssistantTheme
 
 @Composable
-fun KnowledgeBaseScreen(modifier: Modifier = Modifier) {
+fun KnowledgeBaseScreen(
+    modifier: Modifier = Modifier,
+    onBackClick: () -> Unit = {}
+) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -71,6 +75,15 @@ fun KnowledgeBaseScreen(modifier: Modifier = Modifier) {
                 description = "算法题、八股文、项目复盘和面试记录。"
             )
         }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        OutlinedButton(
+            onClick = onBackClick,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "返回首页")
+        }
     }
 }
 
@@ -111,4 +124,3 @@ private fun KnowledgeBaseScreenPreview() {
         KnowledgeBaseScreen()
     }
 }
-

@@ -21,7 +21,10 @@ import androidx.compose.ui.unit.dp
 import com.example.aistudyassistant.ui.theme.AIStudyAssistantTheme
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    onStartClick: () -> Unit = {}
+){
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -51,9 +54,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(
-            onClick = {
-                // TODO: 后续跳转到知识库页面
-            },
+            onClick = onStartClick,
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "开始学习")

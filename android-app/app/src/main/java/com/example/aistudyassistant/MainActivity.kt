@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
-import com.example.aistudyassistant.ui.screen.HomeScreen
+import com.example.aistudyassistant.navigation.AppNavHost
 import com.example.aistudyassistant.ui.theme.AIStudyAssistantTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AIStudyAssistantTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomeScreen(
+                    AppNavHost(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
