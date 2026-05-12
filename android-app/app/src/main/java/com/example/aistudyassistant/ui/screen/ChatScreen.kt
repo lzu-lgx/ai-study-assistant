@@ -1,5 +1,6 @@
 package com.example.aistudyassistant.ui.screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -8,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -72,13 +75,18 @@ fun ChatScreen(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        messages.forEach { message ->
-            ChatMessageCard(
-                role = message.role,
-                content = message.content
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
+        LazyColumn(
+            modifier = Modifier
+                .weight(1f)
+                .fillMaxWidth(),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            items(messages) { message ->
+                ChatMessageCard(
+                    role = message.role,
+                    content = message.content
+                )
+            }
         }
 
         Spacer(modifier = Modifier.weight(1f))
