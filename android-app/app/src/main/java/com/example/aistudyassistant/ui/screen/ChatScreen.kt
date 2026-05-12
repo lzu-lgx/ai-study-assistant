@@ -26,9 +26,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.aistudyassistant.ui.theme.AIStudyAssistantTheme
-import com.example.aistudyassistant.model.ChatMessage
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.aistudyassistant.viewmodel.ChatViewModel
+import com.example.aistudyassistant.model.ChatRole
 
 @Composable
 fun ChatScreen(
@@ -77,13 +77,16 @@ fun ChatScreen(
         ) {
             items(messages) { message ->
                 ChatMessageCard(
-                    role = message.role,
+                    role = when (message.role) {
+                        ChatRole.USER -> "你"
+                        ChatRole.ASSISTANT -> "AI 学习助手"
+                    },
                     content = message.content
                 )
             }
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
             value = inputText,
