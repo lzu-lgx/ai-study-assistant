@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -29,11 +31,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.aistudyassistant.ui.theme.AIStudyAssistantTheme
+import com.example.aistudyassistant.model.ChatMessage
 
-private data class ChatMessage(
-    val role: String,
-    val content: String
-)
 
 @Composable
 fun ChatScreen(
@@ -54,6 +53,13 @@ fun ChatScreen(
                 content = "虚拟内存是一种内存管理技术，它为进程提供了连续、独立的虚拟地址空间，并通过页表完成虚拟地址到物理地址的映射。后续接入 RAG 后，这里会基于你上传的资料生成回答。"
             )
         )
+    }
+    val listState = rememberLazyListState()
+
+    LaunchedEffect(messages.size) {
+        if (messages.isNotEmpty()) {
+            listState.animateScrollToItem(messages.size - 1)
+        }
     }
     Column(
         modifier = modifier
@@ -76,6 +82,7 @@ fun ChatScreen(
         Spacer(modifier = Modifier.height(24.dp))
 
         LazyColumn(
+            state = listState,
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth(),
