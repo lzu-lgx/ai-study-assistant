@@ -21,39 +21,26 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.aistudyassistant.ui.theme.AIStudyAssistantTheme
 import com.example.aistudyassistant.model.ChatMessage
-
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.aistudyassistant.viewmodel.ChatViewModel
 
 @Composable
 fun ChatScreen(
     modifier: Modifier = Modifier,
     knowledgeBaseTitle: String = "408 计算机基础",
-    onBackClick: () -> Unit = {}
+    onBackClick: () -> Unit = {},
+    chatViewModel: ChatViewModel = viewModel()
 ) {
-    var inputText by remember { mutableStateOf("") }
 
-    val messages = remember {
-        mutableStateListOf(
-            ChatMessage(
-                role = "你",
-                content = "什么是虚拟内存？"
-            ),
-            ChatMessage(
-                role = "AI 学习助手",
-                content = "虚拟内存是一种内存管理技术，它为进程提供了连续、独立的虚拟地址空间，并通过页表完成虚拟地址到物理地址的映射。后续接入 RAG 后，这里会基于你上传的资料生成回答。"
-            )
-        )
-    }
+    val inputText = chatViewModel.inputText.value
+    val messages = chatViewModel.messages
+
     val listState = rememberLazyListState()
 
     LaunchedEffect(messages.size) {
@@ -101,7 +88,7 @@ fun ChatScreen(
         OutlinedTextField(
             value = inputText,
             onValueChange = { newText ->
-                inputText = newText
+                chatViewModel.onInputTextChange(newText)
             },
             placeholder = {
                 Text(text = "输入你的问题...")
@@ -125,25 +112,7 @@ fun ChatScreen(
 
             Button(
                 onClick = {
-                    val question = inputText.trim()
-
-                    if (question.isNotEmpty()) {
-                        messages.add(
-                            ChatMessage(
-                                role = "你",
-                                content = question
-                            )
-                        )
-
-                        messages.add(
-                            ChatMessage(
-                                role = "AI 学习助手",
-                                content = "这是一个模拟回复。后续这里会调用后端接口，并基于你的知识库资料生成回答。"
-                            )
-                        )
-
-                        inputText = ""
-                    }
+                    chatViewModel.sendMessage()
                 },
                 modifier = Modifier.weight(1f)
             ) {
